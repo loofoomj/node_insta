@@ -77,3 +77,93 @@ body {
 	line-height: 60px;
 	color: #999;
 }
+
+.post .post-body img {
+	width: 100%;
+}
+
+@media (min-width : 768px) {
+	.main-body{
+		width: 100%;
+	}
+	.header-container,.footer-container {
+		width: 100%;
+	}
+}
+
+@media (min-width : 992px) {
+	.main-body{
+		width: 600px;
+	}
+	.header-container,.footer-container {
+		width: 800px;
+	}
+}
+
+@media (min-width : 1200px) {
+	.main-body{
+		width: 600px;
+	}
+	.header-container,.footer-container {
+		width: 800px;
+	}
+}
+
+.main-body {
+  margin: auto;
+}
+
+.post-footer {
+	padding: 5px;
+	padding-left: 25px;
+	padding-right: 25px;
+}
+
+.post-footer .num-of-comment {
+	color: #999;
+}
+
+.each-comment .userId, .each-comment .comment {
+	display: inline;
+}
+
+.each-comment .userId {
+	font-weight: bold;
+}
+
+.each-comment .comment {
+	margin-left: 10px;
+}
+
+.comment-form {
+	content: " ";
+	display: block;
+	height: 0;
+	clear: both;
+	height: 30px;
+	text-align: center;
+	padding: 10px;
+	margin-top: 10px;
+}
+
+.comment-form > div {
+	display: inline;
+}
+
+.comment-form .comment-input input {
+	width: 400px;
+}
+
+.comment-form .comment-button {
+	float: right;
+}
+.footer {
+  width: 100%;
+  background-color: #BBB;
+  height: 100px;
+  border-top: 1px solid #999;
+}
+
+.footer-container {
+	margin: auto;
+}
