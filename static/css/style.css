@@ -167,3 +167,28 @@ body {
 .footer-container {
 	margin: auto;
 }
+
+.login-form {
+	background-color: #fff;
+	padding: 30px;
+	text-align: center;
+	border-radius: 10px;
+	margin-top: 50px;
+}
+
+.login-form input[type="text"],.login-form input[type="password"]{
+	width: 200px;
+}
+
+.input-group {
+	margin: 10px;
+}
+
+.input-label {
+	width: 80px;
+	display: inline-block;
+}
+
+.submit-btn {
+	width: 100px;
+}
