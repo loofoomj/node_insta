@@ -21,6 +21,15 @@
           </div>
         </div>
       </div>
+
+      <div class="content-upload-container">
+        <form action="/upload" method="post" enctype="multipart/form-data" style="text-align: center;">
+          <textarea name="write_text" class="write-text-area" id="content" placeholder="내용을 입력해주세요"></textarea>
+          <input type="file" id="getfile" name="userfile">
+          <input type="submit" class="homework-submit-btn" value="작성"/>
+        </form>
+      </div>
+
       <div class="main-body">
         <div class="post">
           <div class="post-header">

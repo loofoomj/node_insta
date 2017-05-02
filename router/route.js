@@ -1,7 +1,7 @@
 var mysql = require('mysql');
 var db_config = require('../db');
 
-module.exports = function(app, passport)
+module.exports = function(app, passport, fs, upload)
 {
      app.get('/',function(req,res){
        if(typeof req.user == 'undefined'){
@@ -59,6 +59,27 @@ module.exports = function(app, passport)
        });
 
      });
+
+
+     app.post('/upload', upload.single('userfile'), function(req, res){
+      var db = mysql.createConnection(db_config);
+      var username = req.user.user_id;
+      var content = req.body.write_text;
+      var filename = req.file.filename;
+      var reg_date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+      var sql = 'INSERT INTO `post`(`user_id`, `img_src`, `content`, `reg_date`)';
+          sql += ' VALUES (?,?,?,?)';
+      db.query(sql, [username, filename, content, reg_date], function(err,results){
+        if(err){
+          console.error('mysql connection error');
+          console.error(err);
+          throw err;
+        }
+        console.log('homework input success');
+      });
+      db.end();
+      res.redirect('/');
+  } );
 
 
      app.get('/login',function(req,res){

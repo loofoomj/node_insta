@@ -7,6 +7,20 @@ var mysql = require('mysql');
 var db_config = require('./db');
 var session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
+var fs = require("fs");
+var multer = require('multer');
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './static/img/uploads');
+  },
+  filename: function (req, file, cb) {
+    var originalname = file.originalname;
+    var type = originalname.split(".")[1];
+    cb(null, file.fieldname + '-' + Date.now() + '.' +type);
+  }
+});
+
+var upload = multer({ storage: storage });
 
 app.use(express.static(path.join(__dirname, 'static')));
 app.set('views', __dirname + '/views');
@@ -87,4 +101,4 @@ passport.use(new LocalStrategy(
 ));
 
 
-var router = require('./router/route')(app, passport);
+var router = require('./router/route')(app, passport, fs, upload);
