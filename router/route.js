@@ -4,15 +4,27 @@ var db_config = require('../db');
 module.exports = function(app, passport, fs, upload)
 {
      app.get('/',function(req,res){
+       var db = mysql.createConnection(db_config);
        if(typeof req.user == 'undefined'){
          console.log('Unauthorized access-main');
          res.redirect('/login');
        } else {
-         res.render('index',{
-             title: "insta_project",
-             username: req.user.user_id
-         });
+         var sql = 'SELECT * FROM `post` ORDER BY `idx` DESC';
+          db.query(sql,  function(err,rows){
+            if(err){
+              console.error('mysql connection error');
+              console.error(err);
+              throw err;
+            }
+            var posts = rows;
+            res.render('index',{
+                title: "insta_project",
+                username: req.user.user_id,
+                posts: posts
+            });
+          });
        }
+       db.end();
      });
 
      app.get('/logout', function(req, res){
@@ -82,10 +94,34 @@ module.exports = function(app, passport, fs, upload)
   } );
 
 
-     app.get('/login',function(req,res){
-        res.render('login',{
+  app.get('/login',function(req,res){
+     res.render('login',{
 
-        });
+     });
+  });
+
+
+     app.get('/delete',function(req,res){
+       var db = mysql.createConnection(db_config);
+       var idx = req.query.idx;
+       var sql = 'DELETE FROM `post` WHERE `idx` = ?';
+       db.query(sql, [idx], function(err,rows){
+         if(err){
+           console.error('mysql connection error');
+           console.error(err);
+           throw err;
+         }
+      });
+      var filename = req.query.filename;
+      var path_name = './static/img/uploads/' + filename;
+      fs.unlink(path_name,
+      function(err){
+      if(err) throw err;
+        console.log('파일을 정상적으로 삭제하였습니다.');
+        }
+      );
+        res.send('<script type="text/javascript">alert("삭제완료");location.href="/"</script>');
+        db.end();
      });
 
      app.post('/login',
